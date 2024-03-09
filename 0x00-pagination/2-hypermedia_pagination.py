@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Simple pagination function"""
-from typing import Tuple, List
+"""Hypermedia pagination function"""
+from typing import Tuple, List, Dict
 import csv
 import math
 
 
-def index_range(page: int, page_ize: int) -> Tuple[int, int]:
+def index_range(page: int, page_size: int) -> Tuple[int, int]:
     """returns tuple of start and end index"""
     start = (page - 1) * page_size
     end = start + page_size
@@ -31,7 +31,7 @@ class Server:
 
         return self.__dataset
 
-    def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
         """ returns a page of data"""
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
@@ -39,4 +39,15 @@ class Server:
         data = self.dataset()
         if start > len(data):
             return []
-        return data[start:end]
+        index_data = data[start:end]
+        total_pages = math.ceil(len(data) / page_size)
+        dic = {
+                'page_size': len(index_data),
+                'page': page,
+                'data': index_data,
+                'next_page': page + 1 if end < len(self.__dataset) else None,
+                'prev_page': page - 1 if start > 0 else None,
+                'total_pages': total_pages,
+                }
+        return dic
+
