@@ -18,7 +18,7 @@ babel = Babel(app)
 @babel.localeselector
 def get_locale() -> str:
     """gets the locale for the webpage"""
-    return request.accept_languages.best_match(["LANGUAGES"])
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 @app.route('/')
 def index() -> str:
