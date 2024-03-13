@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Task 6 Module"""
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
@@ -14,6 +14,7 @@ class Config:
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
 
+
 app.config.from_object(Config)
 babel = Babel(app)
 
@@ -25,6 +26,7 @@ users = {
     4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
 }
 
+
 def get_user() -> Union[Dict, None]:
     """retrieves user"""
     try:
@@ -33,10 +35,12 @@ def get_user() -> Union[Dict, None]:
     except Exception:
         return
 
+
 @app.before_request
 def before_request() -> None:
     """gets argument"""
     g.user = get_user()
+
 
 @babel.localeselector
 def get_locale() -> str:
@@ -50,6 +54,7 @@ def get_locale() -> str:
     if header_locale in app.config["LANGUAGES"]:
         return header_locale
     return request.accept_languages.best_match(app.config["LANGUAGES"])
+
 
 @app.route('/')
 def index() -> str:

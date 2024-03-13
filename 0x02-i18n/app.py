@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""A Basic Flask app with internationalization support.
-"""
+"""Task 8 Module"""
 import pytz
 from typing import Union, Dict
 from flask_babel import Babel, format_datetime
