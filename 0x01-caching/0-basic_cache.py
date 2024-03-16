@@ -14,4 +14,3 @@ class BasicCache(BaseCaching):
     def get(self, key):
         """getter method"""
         return self.cache_data.get(key, None)
-
